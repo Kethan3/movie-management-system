@@ -14,6 +14,9 @@ interface Movie {
 
 const movies: Movie[] = [];
 
+app.get('/', (c) => 
+  c.json({ message: 'Welcome to the movie API' }));
+
 
 app.post('/movies', async (c) => {
   const movie: Movie = await c.req.json();
@@ -22,9 +25,12 @@ app.post('/movies', async (c) => {
   }
   movie.ratings = [];
   movies.push(movie);
-  return c.json(movie, 201);
+  return c.json({message: 'successfully added'}, 201);
 });
 
+app.get('/movies', (c) => {
+  return c.json(movies);
+});
 
 app.patch('/movies/:id', async (c) => {
   const id = c.req.param('id');
@@ -107,3 +113,5 @@ app.get('/movies/search', (c) => {
 
 
 serve(app);
+
+console.log('Server running on http://localhost:3000');
